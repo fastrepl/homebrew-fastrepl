@@ -11,5 +11,5 @@ cask "char" do
   auto_updates true
   depends_on macos: ">= :sonoma"
 
-  app "Hyprnote.app"
+  app "Char.app"
 end
