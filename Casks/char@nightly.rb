@@ -12,4 +12,16 @@ cask "char@nightly" do
   depends_on macos: ">= :sonoma"
 
   app "Char Nightly.app"
+
+  postflight do
+    system_command "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      args: ["-f", "#{appdir}/Char Nightly.app"]
+    system_command "killall", args: ["Dock"], must_succeed: false
+  end
+
+  uninstall_postflight do
+    system_command "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      args: ["-u", "#{appdir}/Char Nightly.app"]
+    system_command "killall", args: ["Dock"], must_succeed: false
+  end
 end

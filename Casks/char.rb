@@ -12,4 +12,16 @@ cask "char" do
   depends_on macos: ">= :sonoma"
 
   app "Hyprnote.app"
+
+  postflight do
+    system_command "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      args: ["-f", "#{appdir}/Hyprnote.app"]
+    system_command "killall", args: ["Dock"], must_succeed: false
+  end
+
+  uninstall_postflight do
+    system_command "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister",
+      args: ["-u", "#{appdir}/Hyprnote.app"]
+    system_command "killall", args: ["Dock"], must_succeed: false
+  end
 end
